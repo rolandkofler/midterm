@@ -127,7 +127,7 @@ if __name__ == '__main__':
     data = bt.feeds.GenericCSVData(
         dataname=datapath,
         # Do not pass values before this date
-        fromdate=datetime.datetime(2016, 1, 1),
+        fromdate=datetime.datetime(2014, 1, 1),
         # Do not pass values before this date
         todate=datetime.datetime(2019, 1, 14),
         dtformat=('%Y-%m-%d'),
@@ -141,7 +141,8 @@ if __name__ == '__main__':
 
     #LOG    
     data.plotinfo.plotlog = True
-    data.plotinfo.plotylimited = True
+    data.plotinfo.plotylimited = False
+
     
 
     # Add the Data Feed to Cerebro
