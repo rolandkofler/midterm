@@ -8,5 +8,5 @@ df = pandas.DataFrame(weeklyCandles, columns= ["CloseTime", "OpenPrice", "HighPr
 df['CloseTime'] = pandas.to_datetime(df['CloseTime'],unit='s')
 df = df[df["ClosePrice"] > 0]    # remove empty rows
 df = df[df["?"]!=198105.7]       # remove strange outlair, TODO: understand column meaning
-print (df.head())
+print (df.describe())
 df.to_csv("kraken-1WOLHC-2013-2019.txt", index=False)

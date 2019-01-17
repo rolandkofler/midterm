@@ -1,21 +1,23 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-import datetime  # For datetime objects
+import datetime # For datetime objects
 import os.path  # To manage paths
-import sys  # To find out the script name (in argv[0])
+import sys      # To find out the script name (in argv[0])
 
 # Import the backtrader platform
 import backtrader as bt
 
 # Create a Stratey
-class TestStrategy(bt.Strategy):
+class MovingAverageStrategy(bt.Strategy):
+
+    # Parameters: moving average period to 12 ticks
     params = (
         ('maperiod', 12),
     )
 
     def log(self, txt, dt=None):
-        ''' Logging function fot this strategy'''
+        ''' Logging function for this strategy'''
         dt = dt or self.datas[0].datetime.date(0)
         print('%s, %s' % (dt.isoformat(), txt))
 
@@ -82,7 +84,7 @@ class TestStrategy(bt.Strategy):
     def next(self):# -*- coding: utf-8 -*-
 
         # Simply log the closing price of the series from the reference
-        self.log('Close, %.2f' % self.dataclose[0])
+        # self.log('Close, %.2f' % self.dataclose[0])
 
         # Check if an order is pending ... if yes, we cannot send a 2nd one
         if self.order:
@@ -115,7 +117,7 @@ if __name__ == '__main__':
     cerebro = bt.Cerebro()
 
     # Add a strategy
-    cerebro.addstrategy(TestStrategy)
+    cerebro.addstrategy(MovingAverageStrategy, maperiod=20)
 
     # Datas are in a subfolder of the samples. Need to find where the script is
     # because it could have been called from anywhere
@@ -143,8 +145,6 @@ if __name__ == '__main__':
     data.plotinfo.plotlog = True
     data.plotinfo.plotylimited = False
 
-    
-
     # Add the Data Feed to Cerebro
     cerebro.adddata(data)
 
@@ -152,7 +152,7 @@ if __name__ == '__main__':
     cerebro.broker.setcash(10000.0)
 
     # Add a FixedSize sizer according to the stake
-    cerebro.addsizer(bt.sizers.FixedSize, stake=.01)
+    cerebro.addsizer(bt.sizers.FixedSize, stake=1)
 
     # Set the commission
     cerebro.broker.setcommission(commission=0.0)
