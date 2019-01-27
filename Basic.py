@@ -73,7 +73,7 @@ class MovingAverageStrategy(bt.Strategy):
             self.bar_executed = len(self)
 
         elif order.status in [order.Canceled, order.Margin, order.Rejected]:
-            self.log('Order Canceled/Margin/Rejected')
+            self.log(' ** Order %s' % order.Status[order.status])
 
         # Write down: no pending order
         self.order = None
